@@ -4,33 +4,49 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}"
 >
-<div layout:fragment="content">
-    <h3 th:text="${title}"></h3>
-    <div>
-        <span th:text="${percentA}"></span>
-        <span th:text="${percentB}"></span>
+<div layout:fragment="content" class="container">
+    <h3 class="mt-5" th:text="${title}"></h3>
+
+    <div class="progress" style="height: 30px;">
+        <div class="progress-bar bg-primary" role="progressbar" th:style="'width:' + ${percentA} + '%'" th:text="${percentA} + '% (' + (${countA} == null ? 0 : ${countA}) + '표)'"></div>
+        <div class="progress-bar bg-danger" role="progressbar" th:style="'width:' + ${percentB} + '%'" th:text="${percentB} + '% (' + (${countB} == null ? 0 : ${countB}) + '표)'"></div>
     </div>
-    <div th:object="${question}">
-        <span th:text="${question.optionA}"></span>
-        <span th:text="${question.optionB}"></span>
+
+    <div th:object="${question}" class="row mt-4 text-center">
+        <div class="col-md-6">
+            <img th:src="@{'https://loremflickr.com/400/300/' + *{optionA}}" class="img-fluid rounded mb-2" alt="Option A Image">
+            <h5 class="font-weight-bold" th:text="*{optionA}"></h5>
+        </div>
+        <div class="col-md-6">
+            <img th:src="@{'https://loremflickr.com/400/300/' + *{optionB}}" class="img-fluid rounded mb-2" alt="Option B Image">
+            <h5 class="font-weight-bold" th:text="*{optionB}"></h5>
+        </div>
     </div>
     <hr>
-    <a href="/questions">목록으로</a>
+    <a href="/questions" class="btn btn-secondary">목록으로</a>
     <hr>
-    <form th:action="@{/questions/{questionId}/answer/create(questionId=${question.id})}" th:object="${answerForm}" method="post">
+    <form th:action="@{/questions/{questionId}/answer/create(questionId=${question.id})}" th:object="${answerForm}" method="post" class="mt-4">
         <h3>투표 결과</h3>
-        <label for="answerText"></label>
-        <select name="answerText" id="answerText">
-        <option value="A" th:text="${question.optionA}"></option>
-        <option value="B" th:text="${question.optionB}"></option>
-        </select>
-        <label for="content"></label>
-        <textarea id="content" name="content" placeholder="투표하신 이유를 작성해주세요." cols="30" rows="10"></textarea>
-        <button type="submit">투표하기</button>
+        <div class="form-group">
+            <label for="answerText">선택</label>
+            <select name="answerText" id="answerText" class="form-control">
+                <option value="A" th:text="${question.optionA}"></option>
+                <option value="B" th:text="${question.optionB}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="content">이유</label>
+            <textarea id="content" name="content" placeholder="투표하신 이유를 작성해주세요." class="form-control" rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">투표하기</button>
     </form>
     <hr>
-    <div th:each="a : ${answers}">
-        <p th:text="${a.answerText} +'-'+ ${a.content}"></p>
+    <div class="mt-4">
+        <div th:each="a : ${answers}" class="card mb-2">
+            <div class="card-body bg-opacity-50" th:classappend="${a.answerText == 'A' ? 'bg-primary' : 'bg-danger'}">
+                <p class="card-text" th:text="${a.answerText} +'-'+ ${a.content}"></p>
+            </div>
+        </div>
     </div>
 </div>
 </html>

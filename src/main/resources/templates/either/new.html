@@ -3,17 +3,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}"
 >
-<div layout:fragment="content">
-<h1>새 질문 만들기</h1>
-<form action="/questions/create" method="post" th:object="${question}">
-    <p><label for="title">질문</label></p>
-    <p><input type="text" id="title" name="title" placeholder="짜장면 vs 짬뽕?"></p>
-    <p><label for="optionA">선택지 A</label></p>
-    <p><input type="text" id="optionA" name="optionA"></p>
-    <p><label for="optionB">선택지 B</label></p>
-    <p><input type="text" id="optionB" name="optionB"></p>
-    <p><button type="submit">질문 등록</button></p>
-</form>
-<a href="/questions">목록으로</a>
+<div layout:fragment="content" class="container">
+    <h1 class="mt-5">새 질문 만들기</h1>
+    <form action="/questions/create" method="post" th:object="${question}" class="mt-4">
+        <div class="form-group">
+            <label for="title">질문</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="짜장면 vs 짬뽕?">
+        </div>
+        <div class="form-group">
+            <label for="optionA">선택지 A</label>
+            <input type="text" id="optionA" name="optionA" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="optionB">선택지 B</label>
+            <input type="text" id="optionB" name="optionB" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">질문 등록</button>
+    </form>
+    <a href="/questions" class="btn btn-secondary mt-3">목록으로</a>
 </div>
 </html>

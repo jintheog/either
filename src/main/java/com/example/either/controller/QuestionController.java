@@ -43,21 +43,22 @@ public class QuestionController {
     public String questionDetail(@PathVariable Long id, Model model) {
         Question question = questionService.getQuestionById(id);
         List<Answer> answers = answerService.getAnswersByQuestionId(id);
-        int countTotal = answers.size();
-        int countOptionA = 0;
-        double percentA = 0;
-        double percentB = 0;
-        if(countTotal != 0){
-            countOptionA = answers.stream()
-                    .mapToInt(answer -> answer.getAnswerText().equals("A") ? 1 : 0)
-                    .sum();
-            percentA = ((double) countOptionA / countTotal) * 100;
-            percentB = (double) 100 - percentA;
-        } else{
-            percentA = 50;
-            percentB = 50;
+
+        long countA = answerService.getAnswerCount(id, "A");
+        long countB = answerService.getAnswerCount(id, "B");
+        long countTotal = countA + countB;
+
+        double percentA = 50.0;
+        double percentB = 50.0;
+
+        if (countTotal > 0) {
+            percentA = ((double) countA / countTotal) * 100;
+            percentB = 100.0 - percentA;
         }
-        model.addAttribute("percentA",  percentA);
+
+        model.addAttribute("countA", countA);
+        model.addAttribute("countB", countB);
+        model.addAttribute("percentA", percentA);
         model.addAttribute("percentB", percentB);
         model.addAttribute("question", question);
         model.addAttribute("answers", answers);

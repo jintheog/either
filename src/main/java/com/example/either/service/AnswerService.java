@@ -19,6 +19,10 @@ public class AnswerService {
         return answerRepository.findByQuestionId(questionId);
     }
 
+    public long getAnswerCount(Long questionId, String answerText) {
+        return answerRepository.countByQuestionIdAndAnswerText(questionId, answerText);
+    }
+
     @Transactional
     public void saveAnswer(Long question_id, Answer answer)
     {
