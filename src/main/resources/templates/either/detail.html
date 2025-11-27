@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}"
+>
+<div layout:fragment="content">
+    <h3 th:text="${title}"></h3>
+    <div>
+        <span th:text="${percentA}"></span>
+        <span th:text="${percentB}"></span>
+    </div>
+    <div th:object="${question}">
+        <span th:text="${question.optionA}"></span>
+        <span th:text="${question.optionB}"></span>
+    </div>
+    <hr>
+    <a href="/questions">목록으로</a>
+    <hr>
+    <form th:action="@{/questions/{questionId}/answer/create(questionId=${question.id})}" th:object="${answerForm}" method="post">
+        <h3>투표 결과</h3>
+        <label for="answerText"></label>
+        <select name="answerText" id="answerText">
+        <option value="A" th:text="${question.optionA}"></option>
+        <option value="B" th:text="${question.optionB}"></option>
+        </select>
+        <label for="content"></label>
+        <textarea id="content" name="content" placeholder="투표하신 이유를 작성해주세요." cols="30" rows="10"></textarea>
+        <button type="submit">투표하기</button>
+    </form>
+    <hr>
+    <div th:each="a : ${answers}">
+        <p th:text="${a.answerText} +'-'+ ${a.content}"></p>
+    </div>
+</div>
+</html>

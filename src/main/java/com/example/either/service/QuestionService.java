@@ -18,6 +18,11 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
+    public Question getQuestionById(Long id) {
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("question not found"));
+    }
+
     @Transactional
     public void createQuestion(Question question) {
         questionRepository.save(question);
