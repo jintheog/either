@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>새 질문 만들기</title>
+</head>
+<body>
+<h1>새 질문 만들기</h1>
+<form action="/questions/create" method="post" th:object="${question}">
+    <p><label for="title">질문</label></p>
+    <p><input type="text" id="title" name="title" placeholder="짜장면 vs 짬뽕?"></p>
+    <p><label for="optionA">선택지 A</label></p>
+    <p><input type="text" id="optionA" name="optionA"></p>
+    <p><label for="optionB">선택지 B</label></p>
+    <p><input type="text" id="optionB" name="optionB"></p>
+    <p><button type="submit">질문 등록</button></p>
+</form>
+<a href="/questions">목록으로</a>
+</body>
+</html>
